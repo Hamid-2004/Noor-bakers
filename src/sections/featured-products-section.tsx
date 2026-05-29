@@ -85,72 +85,102 @@ export function FeaturedProductsSection() {
           className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
         >
           <AnimatePresence mode="popLayout">
-            {filteredProducts.map((product) => {
-              const quantity = quantities[product.id] ?? 1;
-              return (
-                <motion.article
-                  key={product.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.3, ease: easePremium }}
-                  whileHover={{ y: -8 }}
-                  className="group overflow-hidden rounded-3xl border border-[#d9d9d9]/60 bg-white premium-shadow transition-all duration-300 hover:border-[#0b2c5d]/20 hover:premium-shadow-lg hover:ring-1 hover:ring-[#0b2c5d]/15"
+            {filteredProducts.length === 0 ? (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="col-span-full flex flex-col items-center justify-center py-20 text-center"
+              >
+                <div className="rounded-full bg-[#f5f5f5] p-6 mb-4">
+                  <svg className="h-10 w-10 text-[#0b2c5d]/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-[#0b2c5d]">No products found</h3>
+                <p className="mt-2 text-[#0b2c5d]/60 max-w-md mx-auto">
+                  We couldn&apos;t find any products in this category at the moment. Please check back later or explore other categories.
+                </p>
+                <button
+                  onClick={() => setSelectedCategory("all")}
+                  className="mt-6 rounded-full bg-[#0b2c5d] px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#0b2c5d]/20 transition-colors hover:bg-[#082249]"
                 >
-                  <Link href={`/products/${product.slug}`} className="block relative aspect-[5/4] overflow-hidden bg-[#f5f5f5]">
-                    <PremiumImage
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      hoverZoom
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover"
-                    />
-                  </Link>
-                  <div className="p-4 sm:p-5">
-                    <div className="flex items-start justify-between gap-3">
-                      <Link href={`/products/${product.slug}`} className="hover:opacity-80 transition-opacity">
-                        <p className="font-semibold text-[#0b2c5d]">{product.name}</p>
-                      </Link>
-                      <p className="shrink-0 text-sm font-bold text-[#0b2c5d]/85">PKR {product.price}</p>
+                  View All Products
+                </button>
+              </motion.div>
+            ) : (
+              filteredProducts.map((product) => {
+                const quantity = quantities[product.id] ?? 1;
+                return (
+                  <motion.article
+                    key={product.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3, ease: easePremium }}
+                    whileHover={{ y: -6, scale: 1.01 }}
+                    className="group flex flex-col overflow-hidden rounded-3xl border border-[#d9d9d9]/50 bg-white premium-shadow transition-all duration-300 hover:border-[#0b2c5d]/30 hover:premium-shadow-lg hover:ring-2 hover:ring-[#0b2c5d]/10"
+                  >
+                    <Link href={`/products/${product.slug}`} className="block relative aspect-[4/3] overflow-hidden bg-[#f5f5f5]">
+                      <PremiumImage
+                        src={product.image}
+                        alt={product.name}
+                        fill
+                        hoverZoom
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0b2c5d]/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    </Link>
+                    <div className="flex flex-1 flex-col p-4 sm:p-5">
+                      <div className="flex items-start justify-between gap-3">
+                        <Link href={`/products/${product.slug}`} className="hover:opacity-80 transition-opacity">
+                          <p className="font-bold text-[#0b2c5d] group-hover:text-[#082249] transition-colors">{product.name}</p>
+                        </Link>
+                        <p className="shrink-0 text-sm font-extrabold text-[#0b2c5d]">PKR {product.price}</p>
+                      </div>
+                      <p className="text-xs text-[#0b2c5d]/60 mt-1.5 line-clamp-2 min-h-[2.5rem]">
+                        {product.description}
+                      </p>
+                      <div className="mt-auto pt-4 flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-1 rounded-xl bg-[#f5f5f5] p-1 border border-[#0b2c5d]/5">
+                          <button
+                            onClick={() =>
+                              setQuantities((prev) => ({ ...prev, [product.id]: Math.max(1, quantity - 1) }))
+                            }
+                            aria-label="Decrease quantity"
+                            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#0b2c5d] hover:bg-white transition-all shadow-sm active:scale-95"
+                          >
+                            -
+                          </button>
+                          <span className="w-6 text-center text-sm font-semibold text-[#0b2c5d]">{quantity}</span>
+                          <button
+                            onClick={() => setQuantities((prev) => ({ ...prev, [product.id]: Math.min(product.stock, quantity + 1) }))}
+                            aria-label="Increase quantity"
+                            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#0b2c5d] hover:bg-white transition-all shadow-sm active:scale-95"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <motion.button
+                          onClick={() => {
+                            addToCart(product, quantity);
+                            open();
+                          }}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          className="rounded-xl bg-[#0b2c5d] px-4 py-2 text-sm font-bold tracking-wide text-white shadow-md shadow-[#0b2c5d]/20 transition-colors duration-200 hover:bg-[#082249]"
+                        >
+                          Add to Cart
+                        </motion.button>
+                      </div>
                     </div>
-                    <p className="text-xs text-[#0b2c5d]/60 mt-1 line-clamp-2 min-h-[2rem]">
-                      {product.description}
-                    </p>
-                    <div className="mt-4 flex items-center gap-2">
-                      <button
-                        onClick={() =>
-                          setQuantities((prev) => ({ ...prev, [product.id]: Math.max(1, quantity - 1) }))
-                        }
-                        className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#d9d9d9] text-[#0b2c5d] transition-all duration-200 hover:border-[#0b2c5d]/30 hover:bg-[#f5f5f5]"
-                      >
-                        -
-                      </button>
-                      <span className="w-7 text-center text-sm font-medium text-[#0b2c5d]">{quantity}</span>
-                      <button
-                        onClick={() => setQuantities((prev) => ({ ...prev, [product.id]: Math.min(product.stock, quantity + 1) }))}
-                        className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#d9d9d9] text-[#0b2c5d] transition-all duration-200 hover:border-[#0b2c5d]/30 hover:bg-[#f5f5f5]"
-                      >
-                        +
-                      </button>
-                      <motion.button
-                        onClick={() => {
-                          addToCart(product, quantity);
-                          open();
-                        }}
-                        whileHover={{ scale: 1.04 }}
-                        whileTap={{ scale: 0.97 }}
-                        transition={{ duration: 0.2 }}
-                        className="ml-auto rounded-xl bg-[#0b2c5d] px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-[#0b2c5d]/15 transition-colors duration-200 hover:bg-[#082249]"
-                      >
-                        Add to Cart
-                      </motion.button>
-                    </div>
-                  </div>
-                </motion.article>
-              );
-            })}
+                  </motion.article>
+                );
+              })
+            )}
           </AnimatePresence>
         </motion.div>
       </div>

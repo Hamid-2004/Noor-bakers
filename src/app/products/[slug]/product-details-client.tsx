@@ -180,6 +180,7 @@ export function ProductDetailsClient({ product }: Props) {
                   <button
                     onClick={handleDecrease}
                     disabled={quantity <= 1}
+                    aria-label="Decrease quantity"
                     className="flex h-9 w-9 items-center justify-center rounded-xl text-[#0b2c5d] hover:bg-white disabled:opacity-30 disabled:hover:bg-transparent transition-all"
                   >
                     <Minus className="h-4 w-4" />
@@ -190,6 +191,7 @@ export function ProductDetailsClient({ product }: Props) {
                   <button
                     onClick={handleIncrease}
                     disabled={quantity >= product.stock}
+                    aria-label="Increase quantity"
                     className="flex h-9 w-9 items-center justify-center rounded-xl text-[#0b2c5d] hover:bg-white disabled:opacity-30 disabled:hover:bg-transparent transition-all"
                   >
                     <Plus className="h-4 w-4" />
@@ -219,11 +221,12 @@ export function ProductDetailsClient({ product }: Props) {
         </h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {relatedProducts.map((p) => (
-            <div
+            <motion.article
               key={p.id}
-              className="group overflow-hidden rounded-3xl border border-[#d9d9d9]/60 bg-white premium-shadow transition-all duration-300 hover:border-[#0b2c5d]/20 hover:premium-shadow-lg"
+              whileHover={{ y: -6, scale: 1.01 }}
+              className="group flex flex-col overflow-hidden rounded-3xl border border-[#d9d9d9]/50 bg-white premium-shadow transition-all duration-300 hover:border-[#0b2c5d]/30 hover:premium-shadow-lg hover:ring-2 hover:ring-[#0b2c5d]/10"
             >
-              <Link href={`/products/${p.slug}`} className="block relative aspect-[5/4] overflow-hidden bg-[#f5f5f5]">
+              <Link href={`/products/${p.slug}`} className="block relative aspect-[4/3] overflow-hidden bg-[#f5f5f5]">
                 <PremiumImage
                   src={p.image}
                   alt={p.name}
@@ -232,25 +235,26 @@ export function ProductDetailsClient({ product }: Props) {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b2c5d]/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </Link>
-              <div className="p-4 sm:p-5">
+              <div className="flex flex-1 flex-col p-4 sm:p-5">
                 <div className="flex items-start justify-between gap-3">
                   <Link href={`/products/${p.slug}`} className="hover:opacity-85">
-                    <p className="font-semibold text-[#0b2c5d]">{p.name}</p>
+                    <p className="font-bold text-[#0b2c5d] group-hover:text-[#082249] transition-colors">{p.name}</p>
                   </Link>
-                  <p className="shrink-0 text-sm font-bold text-[#0b2c5d]/85">PKR {p.price}</p>
+                  <p className="shrink-0 text-sm font-extrabold text-[#0b2c5d]">PKR {p.price}</p>
                 </div>
-                <div className="mt-4 flex items-center justify-between">
+                <div className="mt-auto pt-4 flex items-center justify-between">
                   <span className="text-xs text-[#0b2c5d]/60 capitalize">{p.category}</span>
                   <Link
                     href={`/products/${p.slug}`}
-                    className="text-xs font-semibold text-[#0b2c5d] hover:underline"
+                    className="text-xs font-bold text-[#0b2c5d] hover:text-[#082249] hover:underline"
                   >
                     View Details
                   </Link>
                 </div>
               </div>
-            </div>
+            </motion.article>
           ))}
         </div>
       </div>

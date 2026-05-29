@@ -84,46 +84,56 @@ export function Navbar() {
       </nav>
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.28, ease: easePremium }}
-            className="overflow-hidden border-t border-[#d9d9d9]/60 bg-white/95 backdrop-blur-md md:hidden"
-          >
-            <div className="px-4 py-4">
-              <p className="mb-3 text-sm text-[#0b2c5d]/80">
-                {city}, {area}
-              </p>
-              <div className="flex flex-col gap-3">
-                {["Home", "Categories", "About", "Contact"].map((item, index) => (
-                  <motion.div
-                    key={item}
-                    initial={{ opacity: 0, x: -12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.05, duration: 0.25 }}
-                  >
-                    <Link
-                      href={item === "Home" ? "/" : item === "Categories" ? "/#categories" : "#"}
-                      className="block text-sm text-[#0b2c5d] transition-colors hover:text-[#082249]"
-                      onClick={() => setIsMenuOpen(false)}
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 top-[65px] z-30 bg-[#0b2c5d]/20 backdrop-blur-sm md:hidden"
+              onClick={() => setIsMenuOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.28, ease: easePremium }}
+              className="absolute left-0 right-0 top-full z-40 overflow-hidden border-b border-[#d9d9d9]/60 bg-white/95 backdrop-blur-md md:hidden shadow-lg"
+            >
+              <div className="px-4 py-4">
+                <p className="mb-3 text-sm text-[#0b2c5d]/80">
+                  {city}, {area}
+                </p>
+                <div className="flex flex-col gap-3">
+                  {["Home", "Categories", "About", "Contact"].map((item, index) => (
+                    <motion.div
+                      key={item}
+                      initial={{ opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.05, duration: 0.25 }}
                     >
-                      {item}
-                    </Link>
-                  </motion.div>
-                ))}
-                <button
-                  onClick={() => {
-                    open();
-                    setIsMenuOpen(false);
-                  }}
-                  className="rounded-xl border border-[#d9d9d9] bg-white p-2.5 text-sm text-[#0b2c5d] transition-colors hover:bg-[#f5f5f5]"
-                >
-                  Cart ({itemCount})
-                </button>
+                      <Link
+                        href={item === "Home" ? "/" : item === "Categories" ? "/#categories" : "#"}
+                        className="block text-sm text-[#0b2c5d] transition-colors hover:text-[#082249]"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item}
+                      </Link>
+                    </motion.div>
+                  ))}
+                  <button
+                    onClick={() => {
+                      open();
+                      setIsMenuOpen(false);
+                    }}
+                    className="rounded-xl border border-[#d9d9d9] bg-white p-2.5 text-sm text-[#0b2c5d] transition-colors hover:bg-[#f5f5f5]"
+                  >
+                    Cart ({itemCount})
+                  </button>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

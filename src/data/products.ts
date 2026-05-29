@@ -35,7 +35,7 @@ export const products: Product[] = [
     price: 320,
     stock: 40,
     featured: true,
-    gallery: ["/categories/bread-and-buns.png", "/categories/placeholder.svg"]
+    gallery: ["/categories/bread-and-buns.png"]
   },
   {
     id: "chocolate-cake",
@@ -83,7 +83,7 @@ export const products: Product[] = [
     price: 450,
     stock: 35,
     featured: false,
-    gallery: ["/categories/biscuits.png", "/categories/placeholder.svg"]
+    gallery: ["/categories/biscuits.png"]
   },
   {
     id: "frozen-samosa",
@@ -95,7 +95,7 @@ export const products: Product[] = [
     price: 680,
     stock: 15,
     featured: false,
-    gallery: ["/categories/frozen-items.png", "/categories/placeholder.svg"]
+    gallery: ["/categories/frozen-items.png"]
   }
 ];
 

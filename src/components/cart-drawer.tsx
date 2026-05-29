@@ -137,6 +137,7 @@ export function CartDrawer() {
                                 <button
                                   onClick={() => updateQuantity(item.id, item.quantity - 1)}
                                   disabled={item.quantity <= 1}
+                                  aria-label="Decrease quantity"
                                   className="flex h-7 w-7 items-center justify-center rounded-lg text-[#0b2c5d] hover:bg-white disabled:opacity-30 disabled:hover:bg-transparent transition-all"
                                 >
                                   <Minus className="h-3 w-3" />
@@ -147,6 +148,7 @@ export function CartDrawer() {
                                 <button
                                   onClick={() => updateQuantity(item.id, item.quantity + 1)}
                                   disabled={item.quantity >= (item.stock ?? 99)}
+                                  aria-label="Increase quantity"
                                   className="flex h-7 w-7 items-center justify-center rounded-lg text-[#0b2c5d] hover:bg-white disabled:opacity-30 disabled:hover:bg-transparent transition-all"
                                 >
                                   <Plus className="h-3 w-3" />

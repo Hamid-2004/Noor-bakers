@@ -29,7 +29,7 @@ export function CategoriesSection() {
         >
           Categories
         </motion.h2>
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4">
           {categories.map((category, index) => (
             <motion.article
               key={category.id}
@@ -38,9 +38,9 @@ export function CategoriesSection() {
               whileInView="visible"
               viewport={{ once: true, margin: "-40px" }}
               transition={{ delay: index * 0.05, duration: 0.45, ease: easePremium }}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -8, scale: 1.02 }}
               onClick={() => handleCategoryClick(category.id)}
-              className="group cursor-pointer overflow-hidden rounded-3xl bg-white premium-shadow transition-all duration-300 hover:premium-shadow-lg hover:ring-1 hover:ring-[#0b2c5d]/12"
+              className="group cursor-pointer overflow-hidden rounded-2xl sm:rounded-3xl bg-white premium-shadow transition-all duration-300 hover:premium-shadow-lg hover:ring-2 hover:ring-[#0b2c5d]/20 relative"
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-[#f5f5f5]">
                 <PremiumImage
@@ -51,10 +51,10 @@ export function CategoriesSection() {
                   sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b2c5d]/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b2c5d]/60 via-[#0b2c5d]/10 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80" />
               </div>
-              <div className="p-4 sm:p-5">
-                <p className="text-sm font-medium text-[#0b2c5d] transition-colors duration-200 group-hover:text-[#082249] sm:text-base">
+              <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5 z-10">
+                <p className="text-sm font-semibold text-white drop-shadow-md transition-transform duration-300 group-hover:-translate-y-1 sm:text-lg">
                   {category.name}
                 </p>
               </div>

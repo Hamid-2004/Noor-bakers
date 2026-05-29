@@ -9,8 +9,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Noor Bakers",
-  description: "Premium bakery frontend experience",
+  metadataBase: new URL("https://noorbakers.com"),
+  title: {
+    default: "Noor Bakers - Premium Sweets, Nimco & Bakery Items",
+    template: "%s | Noor Bakers",
+  },
+  description: "Experience the tradition of quality and taste with Noor Bakers. Order premium sweets, fresh nimco, artisan cakes, and more online.",
+  openGraph: {
+    title: "Noor Bakers - Premium Bakery",
+    description: "Experience the tradition of quality and taste with Noor Bakers. Premium sweets, cakes, and nimco.",
+    url: "https://noorbakers.com",
+    siteName: "Noor Bakers",
+    images: [
+      {
+        url: assets.backgrounds.hero,
+        width: 1200,
+        height: 630,
+        alt: "Noor Bakers Interior",
+      },
+    ],
+    locale: "en_PK",
+    type: "website",
+  },
   icons: {
     icon: assets.logo.main,
   },
