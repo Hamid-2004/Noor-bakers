@@ -29,7 +29,7 @@ export function HeroSection() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-white/55 via-white/25 to-white/10" />
 
       <motion.div
-        className="relative z-10 mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-12"
+        className="relative z-10 mx-auto grid max-w-[1120px] gap-10 lg:grid-cols-2 lg:items-center lg:gap-8 xl:gap-10"
         variants={staggerContainer}
         initial="hidden"
         animate="visible"
